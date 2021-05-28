@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:chat_app/services/db_service.dart';
+import 'package:chat_app/services/navigation_service.dart';
 import 'package:chat_app/services/snackbar_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,5 +33,25 @@ class AuthProvider extends ChangeNotifier {
       authStatus = AuthStatus.Error;
     }
     notifyListeners();
+  }
+
+  void registerUserWithEmailAndPassword(String name, String email,
+      String password, File? file, Future<void>? onSuccess) async {
+    authStatus = AuthStatus.Authenticating;
+    notifyListeners();
+    try {
+      UserCredential userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await DBService.instance.createUserInDB(
+          userCredential.user!.uid, name, email, password, file);
+      SnackBarService.instance
+          .showSnackBarSuccess("User registered Successfully!");
+      authStatus = AuthStatus.Authenticated;
+      notifyListeners();
+      NavigationService.instance.goBack();
+    } catch (e) {
+      print(e);
+      SnackBarService.instance.showSnackBarError("Error :- ${e.toString()}");
+    }
   }
 }
