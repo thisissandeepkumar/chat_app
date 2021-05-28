@@ -1,3 +1,4 @@
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/pages/login_page.dart';
 import 'package:chat_app/pages/registration_page.dart';
 import 'package:chat_app/services/navigation_service.dart';
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'login': (BuildContext _context) => LoginPage(),
         'register': (BuildContext _context) => RegistrationPage(),
+        'home': (BuildContext _context) => HomePage(),
       },
     );
   }

@@ -48,7 +48,7 @@ class AuthProvider extends ChangeNotifier {
           .showSnackBarSuccess("User registered Successfully!");
       authStatus = AuthStatus.Authenticated;
       notifyListeners();
-      NavigationService.instance.goBack();
+      NavigationService.instance.navigateToReplacement('home');
     } catch (e) {
       print(e);
       SnackBarService.instance.showSnackBarError("Error :- ${e.toString()}");

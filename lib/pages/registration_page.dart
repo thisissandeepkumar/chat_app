@@ -17,18 +17,16 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   late double maxWidth;
   late double maxHeight;
-  late TextEditingController nameController;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
   late bool isImageSelected;
   late File? finalPickedFile;
   late AuthProvider authProvider;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    nameController = new TextEditingController();
-    emailController = new TextEditingController();
-    passwordController = new TextEditingController();
     maxWidth = MediaQuery.of(context).size.width;
     maxHeight = MediaQuery.of(context).size.height;
     isImageSelected = false;
@@ -58,6 +56,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Widget _uiComponents() {
+    nameController = new TextEditingController();
+    emailController = new TextEditingController();
+    passwordController = new TextEditingController();
     return Builder(
       builder: (BuildContext _context) {
         authProvider = Provider.of<AuthProvider>(_context);
@@ -158,49 +159,50 @@ class _RegistrationPageState extends State<RegistrationPage> {
         right: 25.0,
       ),
       child: Form(
+          key: _formKey,
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextFormField(
-            controller: nameController,
-            keyboardType: TextInputType.name,
-            textCapitalization: TextCapitalization.words,
-            decoration: InputDecoration(
-              hintText: "Name",
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.white,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextFormField(
+                controller: nameController,
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.words,
+                decoration: InputDecoration(
+                  hintText: "Name",
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          TextFormField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: "Email",
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.white,
+              TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  hintText: "Email",
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          TextFormField(
-            controller: passwordController,
-            keyboardType: TextInputType.text,
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: "Password",
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.white,
+              TextFormField(
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: "Password",
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
-      )),
+            ],
+          )),
     );
   }
 
